@@ -1,0 +1,127 @@
+I am building a backend-only Reimbursements Management System as part of a Razorpay hiring assignment.
+
+Tech Stack:
+
+* Node.js
+* Express.js
+* PostgreSQL
+* JavaScript (No TypeScript)
+* JWT Authentication
+* Cookie-based Authentication
+* bcrypt for password hashing
+
+Project Requirements:
+
+Roles:
+
+1. EMP (Employee) - default role for new registrations
+2. RM (Reporting Manager)
+3. APE (Accounts Payable Executive)
+4. CFO (Root User)
+
+Important Rules:
+
+* Every new user registers as EMP.
+* Only emails ending with @org.com are allowed.
+* CFO account is seeded and cannot register.
+* Every employee reports to exactly one RM.
+* A reimbursement becomes APPROVED only when:
+
+  * RM approves it
+  * AND one APE approves it
+
+Required APIs:
+
+Public APIs:
+POST /rest/onboardings/register
+POST /rest/onboardings/login
+POST /rest/onboardings/logout
+
+Protected APIs:
+POST /rest/roles/assign
+GET /rest/employees
+POST /rest/employees/assign
+DELETE /rest/employees/assign
+POST /rest/reimbursements
+PATCH /rest/reimbursements
+GET /rest/reimbursements
+GET /rest/reimbursements/:userId
+
+Authentication:
+
+* Login should generate JWT.
+* JWT should be stored in an HTTP-only cookie named "auth".
+* Protected APIs must read the cookie automatically.
+* Implement authentication middleware.
+* Implement role-based authorization middleware.
+
+Database Design:
+
+users
+
+* id
+* name
+* email
+* password_hash
+* role
+* created_at
+* updated_at
+
+employee_manager
+
+* id
+* employee_id
+* manager_id
+* assigned_at
+
+reimbursements
+
+* id
+* employee_id
+* title
+* description
+* amount
+* final_status
+* created_at
+* updated_at
+
+reimbursement_actions
+
+* id
+* reimbursement_id
+* approver_id
+* approver_role
+* status
+* remarks
+* action_date
+
+Project Structure:
+
+src/
+├── config/
+├── controllers/
+├── routes/
+├── services/
+├── middleware/
+├── models/
+├── migrations/
+├── seeders/
+├── utils/
+└── app.js
+
+Requirements:
+
+* Follow SOLID principles.
+* Use controller-service-repository separation.
+* Use async/await everywhere.
+* Proper error handling.
+* Return consistent JSON responses.
+* Add input validation.
+* Use PostgreSQL foreign keys and constraints.
+* Write production-quality code.
+
+First Task:
+Create the complete project folder structure, package.json dependencies, PostgreSQL schema design, migration files, and database connection setup only.
+
+Do not generate API code yet.
+Wait for the next task after setup is complete.
