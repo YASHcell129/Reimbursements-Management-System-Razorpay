@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const { drizzle } = require('drizzle-orm/node-postgres');
 const { env } = require('./env');
 
 const pool = new Pool({
@@ -10,6 +11,9 @@ const pool = new Pool({
   ssl: env.DB_SSL ? { rejectUnauthorized: false } : false
 });
 
+const db = drizzle(pool);
+const drizzleClient = db;
+
 async function query(text, params) {
   const client = await pool.connect();
   try {
@@ -19,4 +23,4 @@ async function query(text, params) {
   }
 }
 
-module.exports = { pool, query };
+module.exports = { pool, query, db, drizzleClient };
